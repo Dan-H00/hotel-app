@@ -1,5 +1,6 @@
 package com.example.HotelApp.controller;
 
+import com.example.HotelApp.enums.API;
 import com.example.HotelApp.model.Root;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import java.io.*;
 @RestController
 public class GeolocationController {
     private String ip;
-    private final String api = "https://ipgeolocation.abstractapi.com/v1/?api_key=1df68f93a6e2462eba5ad07418197cb7&ip_address=";
+    private final String api = "https://ipgeolocation.abstractapi.com/v1/?api_key=" + API.API_KEY.apiKey + "&ip_address=";
     private Double[] coords = new Double[2];
 
     @GetMapping("/latAndLong")

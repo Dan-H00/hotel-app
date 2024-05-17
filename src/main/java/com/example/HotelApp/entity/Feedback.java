@@ -3,20 +3,20 @@ package com.example.HotelApp.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.*;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Builder
-public class Hotel {
+public class Feedback {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
+    private String content;
     private String name;
-    private double latitude;
-    private double longitude;
 }

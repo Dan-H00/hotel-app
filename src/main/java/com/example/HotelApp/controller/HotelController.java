@@ -10,6 +10,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class HotelController {
@@ -23,9 +24,10 @@ public class HotelController {
             .build();
 
     @GetMapping("/hotels")
-    public List<Hotel> getHotelsByRadius(@RequestParam Double radius) {
+    public String getHotelsByRadius(@RequestParam Double radius) {
         List<Hotel> hotels = hotelRepository.findAll();
-        List<Hotel> filteredHotels = new ArrayList<>();
+        String returnString = "Hotels found:";
+        int counter = 0;
 
         Double[] userCoords = this.webClient
                 .get()
@@ -41,15 +43,17 @@ public class HotelController {
             double distance = Math.sqrt(Math.pow((hotelPos[0] - userPos[0]), 2) + Math.pow((hotelPos[1] - userPos[1]), 2));
             System.out.println(distance);
             if (distance <= radius) {
-                filteredHotels.add(hotel);
+                counter++;
+                returnString = returnString + "\n" + hotel.getName() + ",";
             }
         }
 
-        if (!filteredHotels.isEmpty()) {
-            return filteredHotels;
+        if (counter != 0) {
+            returnString = removeLastCharRegexOptional(returnString);
+            return returnString;
         }
         else {
-            throw new RuntimeException("No hotels in radius!");
+            return "Hotels not found";
         }
     }
 
@@ -59,5 +63,11 @@ public class HotelController {
         my = my * 20037508.34 / 180;
 
         return new Double[]{mx, my};
+    }
+
+    public static String removeLastCharRegexOptional(String s) {
+        return Optional.ofNullable(s)
+                .map(str -> str.replaceAll(".$", "."))
+                .orElse(s);
     }
 }

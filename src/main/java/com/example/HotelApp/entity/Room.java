@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 public class Room {
     @Id
+    @GeneratedValue
     private int id;
     private int roomNumber;
     private int type;
