@@ -1,4 +1,4 @@
-package com.example.HotelApp.geolocation;
+package com.example.HotelApp.controller;
 
 import com.example.HotelApp.model.Root;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,16 +14,16 @@ import java.net.*;
 import java.io.*;
 
 @RestController
-public class GeolocationFinder {
+public class GeolocationController {
     private String ip;
     private final String api = "https://ipgeolocation.abstractapi.com/v1/?api_key=1df68f93a6e2462eba5ad07418197cb7&ip_address=";
     private Double[] coords = new Double[2];
 
     @GetMapping("/latAndLong")
     private Double[] findLatAndLong() throws IOException, InterruptedException {
-        URL whatismyip = new URL("http://checkip.amazonaws.com");
+        URL whatIsMyIp = new URL("http://checkip.amazonaws.com");
         BufferedReader in = new BufferedReader(new InputStreamReader(
-                whatismyip.openStream()));
+                whatIsMyIp.openStream()));
         ip = in.readLine();
         String url = api + ip;
         HttpRequest request = HttpRequest.newBuilder()
