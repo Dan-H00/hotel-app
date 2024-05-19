@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Root{
+public class Root {
     public String ip_address;
     public Object city;
     public Object city_geoname_id;

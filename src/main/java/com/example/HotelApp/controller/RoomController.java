@@ -36,8 +36,7 @@ public class RoomController {
 
         if (counter != 0) {
             return result;
-        }
-        else {
+        } else {
             return "No rooms available";
         }
     }

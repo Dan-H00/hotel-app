@@ -1,4 +1,5 @@
 package com.example.HotelApp.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 

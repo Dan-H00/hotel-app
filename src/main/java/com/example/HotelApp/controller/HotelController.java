@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,8 +50,7 @@ public class HotelController {
         if (counter != 0) {
             returnString = removeLastCharRegexOptional(returnString);
             return returnString;
-        }
-        else {
+        } else {
             return "Hotels not found";
         }
     }
