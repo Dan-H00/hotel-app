@@ -23,10 +23,11 @@ public class BookingController {
     private RoomRepository roomRepository;
 
     @PostMapping("/book")
-    public String addBooking(@RequestParam int[] roomNumber, @RequestParam String name, @RequestParam String date, @RequestParam int stayDays, @RequestParam LocalTime checkInTime) {
+    public String addBooking(@RequestParam int[] roomNumber, @RequestParam String name, @RequestParam String date, @RequestParam int stayDays, @RequestParam String time) {
         for (int roomNr : roomNumber) {
             Room room = roomRepository.findByRoomNumber(roomNr);
             LocalDate checkInDate = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
+            LocalTime checkInTime = LocalTime.parse(time, DateTimeFormatter.ISO_TIME);
 
             Booking booking = new Booking().builder()
                     .name(name)
