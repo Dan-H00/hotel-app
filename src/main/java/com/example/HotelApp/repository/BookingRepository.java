@@ -10,4 +10,5 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     Booking findByName(String name);
     List<Booking> findAllByName(String name);
+    Booking findByNameAndRoom_RoomNumber(String name, int roomNumber);
 }

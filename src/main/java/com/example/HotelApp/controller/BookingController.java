@@ -65,6 +65,7 @@ public class BookingController {
                 booking.getRoom().setAvailable(true);
                 booking.setCancelled(true);
                 bookingRepository.save(booking);
+                roomRepository.save(booking.getRoom());
             }
         }
 
