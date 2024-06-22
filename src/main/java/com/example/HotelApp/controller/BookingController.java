@@ -4,7 +4,7 @@ import com.example.HotelApp.entity.Booking;
 import com.example.HotelApp.entity.Room;
 import com.example.HotelApp.repository.BookingRepository;
 import com.example.HotelApp.repository.RoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,12 +15,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class BookingController {
-    @Autowired
-    private BookingRepository bookingRepository;
-
-    @Autowired
-    private RoomRepository roomRepository;
+    private final BookingRepository bookingRepository;
+    private final RoomRepository roomRepository;
 
     @PostMapping("/book")
     public String addBooking(@RequestParam int[] roomNumber, @RequestParam String name, @RequestParam String date, @RequestParam int stayDays, @RequestParam String time) {
