@@ -1,0 +1,77 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="danhotico (generated)" id="1719136999997-1">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50" maxValue="9223372036854775807" minValue="1" sequenceName="booking_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="danhotico (generated)" id="1719136999997-2">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50" maxValue="9223372036854775807" minValue="1" sequenceName="feedback_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="danhotico (generated)" id="1719136999997-3">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50" maxValue="9223372036854775807" minValue="1" sequenceName="hotel_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="danhotico (generated)" id="1719136999997-4">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50" maxValue="9223372036854775807" minValue="1" sequenceName="room_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="danhotico (generated)" id="1719136999997-5">
+        <createTable tableName="booking">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="booking_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="room_id" type="INTEGER"/>
+            <column name="check_in_date" type="date"/>
+            <column name="stay_duration" type="INTEGER"/>
+            <column name="cancelled" type="BOOLEAN"/>
+            <column name="check_in_time" type="time(6) WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="danhotico (generated)" id="1719136999997-6">
+        <createTable tableName="feedback">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="feedback_pkey"/>
+            </column>
+            <column name="content" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="danhotico (generated)" id="1719136999997-7">
+        <createTable tableName="hotel">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="hotel_pkey"/>
+            </column>
+            <column name="latitude" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="danhotico (generated)" id="1719136999997-8">
+        <createTable tableName="room">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="room_pkey"/>
+            </column>
+            <column name="is_available" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_number" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hotel_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="danhotico (generated)" id="1719136999997-9">
+        <addForeignKeyConstraint baseColumnNames="hotel_id" baseTableName="room" constraintName="fkdosq3ww4h9m2osim6o0lugng8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="hotel" validate="true"/>
+    </changeSet>
+    <changeSet author="danhotico (generated)" id="1719136999997-10">
+        <addForeignKeyConstraint baseColumnNames="room_id" baseTableName="booking" constraintName="fkq83pan5xy2a6rn0qsl9bckqai" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="room" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
