@@ -1,6 +1,7 @@
 package com.example.HotelApp.service;
 
 import com.example.HotelApp.entity.Hotel;
+import com.example.HotelApp.exception.hotel.HotelsNotFoundException;
 import com.example.HotelApp.repository.HotelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class HotelService {
             returnString = removeLastCharRegexOptional(returnString);
             return returnString;
         } else {
-            return "Hotels not found";
+            throw new HotelsNotFoundException("Hotels not found");
         }
     }
 

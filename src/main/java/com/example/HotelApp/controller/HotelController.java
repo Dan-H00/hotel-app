@@ -12,7 +12,7 @@ public class HotelController {
     private final HotelService hotelService;
 
     @GetMapping("/hotels")
-    public String getHotelsByRadius(@RequestParam Double radius) {
+    public String getHotelsByRadius(@RequestParam Double radius) throws Exception {
         return hotelService.getHotels(radius);
     }
 }

@@ -2,6 +2,7 @@ package com.example.HotelApp.service;
 
 import com.example.HotelApp.entity.Hotel;
 import com.example.HotelApp.entity.Room;
+import com.example.HotelApp.exception.room.NoRoomsAvailableException;
 import com.example.HotelApp.repository.HotelRepository;
 import com.example.HotelApp.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class RoomService {
         if (counter != 0) {
             return result;
         } else {
-            return "No rooms available";
+            throw new NoRoomsAvailableException("No rooms available");
         }
     }
 }

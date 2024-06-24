@@ -2,6 +2,8 @@ package com.example.HotelApp.service;
 
 import com.example.HotelApp.entity.Booking;
 import com.example.HotelApp.entity.Room;
+import com.example.HotelApp.exception.booking.BookingAlreadyCancelledException;
+import com.example.HotelApp.exception.booking.BookingNotFoundException;
 import com.example.HotelApp.repository.BookingRepository;
 import com.example.HotelApp.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,16 +47,16 @@ public class BookingService {
         List<Booking> bookings = bookingRepository.findAllByName(name);
 
         if (bookings.isEmpty()) {
-            return "Bookings not found on name: " + name;
+            throw new BookingNotFoundException("Booking with name " + name + " not found");
         }
 
         for (Booking booking : bookings) {
             if (booking.getRoom().getRoomNumber() == roomNumber) {
                 if (booking.isCancelled()) {
-                    return "Booking already cancelled";
+                    throw new BookingAlreadyCancelledException("Booking already cancelled");
                 }
                 if (!checkCancellability(booking)) {
-                    return "Booking cannot be cancelled";
+                    throw new BookingAlreadyCancelledException("Booking already cancelled");
                 }
                 booking.getRoom().setAvailable(true);
                 booking.setCancelled(true);

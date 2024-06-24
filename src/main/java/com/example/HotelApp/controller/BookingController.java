@@ -1,8 +1,6 @@
 package com.example.HotelApp.controller;
 
 import com.example.HotelApp.dto.BookingDto;
-import com.example.HotelApp.entity.Booking;
-import com.example.HotelApp.mapper.BookingMapper;
 import com.example.HotelApp.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,12 +14,12 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping("/book")
-    public String addBooking(@RequestBody BookingDto bookingDto) {
+    public String addBooking(@RequestBody BookingDto bookingDto) throws Exception {
         return bookingService.add(bookingDto.getRoomNumber(), bookingDto.getName(), bookingDto.getDate(), bookingDto.getStayDays(), bookingDto.getTime());
     }
 
     @PostMapping("/cancel")
-    public String cancelBooking(@RequestParam String name, @RequestParam int roomNumber) {
+    public String cancelBooking(@RequestParam String name, @RequestParam int roomNumber) throws Exception {
         return bookingService.cancel(name, roomNumber);
     }
 }

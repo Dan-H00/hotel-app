@@ -12,7 +12,7 @@ public class RoomController {
     private final RoomService roomService;
 
     @GetMapping("/rooms")
-    public String getAllRoomsByHotel(@RequestParam String hotelName) {
+    public String getAllRoomsByHotel(@RequestParam String hotelName) throws Exception {
         return roomService.getRooms(hotelName);
     }
 }
