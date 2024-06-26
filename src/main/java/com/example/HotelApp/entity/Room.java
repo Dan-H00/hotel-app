@@ -2,6 +2,7 @@ package com.example.HotelApp.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,6 +16,7 @@ public class Room {
     private int roomNumber;
     private int type;
     private double price;
+    @ColumnDefault("true")
     private boolean isAvailable;
     @ManyToOne
     @JoinColumn(name = "hotel_id")

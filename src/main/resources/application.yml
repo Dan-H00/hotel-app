@@ -1,6 +1,9 @@
 server:
   port: 8080
 spring:
+  liquibase:
+    enabled: true
+    change-log: liquibase-outputChangeLog.yml
   datasource:
     url: jdbc:postgresql://localhost:5432/hotel_app
     username: postgres
@@ -8,5 +11,5 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     database-platform: org.hibernate.dialect.PostgreSQLDialect
