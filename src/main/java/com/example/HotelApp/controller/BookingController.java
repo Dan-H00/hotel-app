@@ -15,7 +15,7 @@ public class BookingController {
 
     @PostMapping("/book")
     public String addBooking(@RequestBody BookingDto bookingDto) throws Exception {
-        return bookingService.add(bookingDto.getRoomNumber(), bookingDto.getName(), bookingDto.getDate(), bookingDto.getStayDays(), bookingDto.getTime());
+        return bookingService.add(bookingDto);
     }
 
     @PostMapping("/cancel")

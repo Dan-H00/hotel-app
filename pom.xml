@@ -91,12 +91,24 @@
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
-			<version>1.6.0.Beta2</version>
+			<version>1.6.0.Beta1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 			<version>4.27.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-inline</artifactId>
+			<version>5.2.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>5.2.0</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 
@@ -136,6 +148,10 @@
 							<version>0.2.0</version>
 						</path>
 					</annotationProcessorPaths>
+					<compilerArgs>
+						<compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>
+						<compilerArg>-Amapstruct.defaultInjectionStrategy=constructor</compilerArg>
+					</compilerArgs>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -147,7 +163,7 @@
 					<url>jdbc:postgresql://localhost:5432/hotel_app</url>
 					<username>postgres</username>
 					<password>rootpass</password>
-					<outputChangeLogFile>src/main/resources/liquibase-outputChangeLog.xml</outputChangeLogFile>
+					<outputChangeLogFile>src/main/resources/liquibase-outputChangeLog.yml</outputChangeLogFile>
 				</configuration>
 			</plugin>
 		</plugins>

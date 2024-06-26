@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 @FeignClient(value = "abstractApi", url = "https://ipgeolocation.abstractapi.com")
 public interface AbstractApiClient {
-    @GetMapping(value = "/v1/?api_key=1df68f93a6e2462eba5ad07418197cb7&ip_address={ipAddress}", consumes = "application/json")
-    Root getCoords(@PathVariable String ipAddress);
+    @GetMapping(value = "/v1")
+    Root getCoords(@RequestParam(name = "api_key") String apiKey, @RequestParam(name = "ip_address") String ipAddress);
 }

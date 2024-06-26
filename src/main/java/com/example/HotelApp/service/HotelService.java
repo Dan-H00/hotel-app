@@ -27,7 +27,6 @@ public class HotelService {
         for (Hotel hotel : hotels) {
             Double[] hotelPos = convertCoordinates(hotel.getLatitude(), hotel.getLongitude());
             double distance = Math.sqrt(Math.pow((hotelPos[0] - userPos[0]), 2) + Math.pow((hotelPos[1] - userPos[1]), 2));
-            System.out.println(distance);
             if (distance <= radius) {
                 counter++;
                 returnString = returnString + "\n" + hotel.getName() + ",";

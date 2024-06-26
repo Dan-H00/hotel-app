@@ -1,14 +1,18 @@
 package com.example.HotelApp.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookingDto {
     private int[] roomNumber;
     private String name;
-    private String date;
-    private int stayDays;
-    private String time;
+    private LocalDate checkInDate;
+    private int stayDuration;
+    private String checkInTime;
 }

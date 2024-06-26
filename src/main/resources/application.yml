@@ -3,7 +3,7 @@ server:
 spring:
   liquibase:
     enabled: true
-    change-log: liquibase-outputChangeLog.xml
+    change-log: liquibase-outputChangeLog.yml
   datasource:
     url: jdbc:postgresql://localhost:5432/hotel_app
     username: postgres

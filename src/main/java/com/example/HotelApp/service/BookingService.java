@@ -1,9 +1,12 @@
 package com.example.HotelApp.service;
 
+import com.example.HotelApp.dto.BookingDto;
 import com.example.HotelApp.entity.Booking;
 import com.example.HotelApp.entity.Room;
 import com.example.HotelApp.exception.booking.BookingAlreadyCancelledException;
+import com.example.HotelApp.exception.booking.BookingCannotBeCanceledException;
 import com.example.HotelApp.exception.booking.BookingNotFoundException;
+import com.example.HotelApp.mapper.BookingMapper;
 import com.example.HotelApp.repository.BookingRepository;
 import com.example.HotelApp.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -19,21 +21,13 @@ import java.util.List;
 public class BookingService {
     private final BookingRepository bookingRepository;
     private final RoomRepository roomRepository;
+    private final BookingMapper bookingMapper;
 
-    public String add(int[] roomNumber, String name, String date, int stayDays, String time) {
-        for (int roomNr : roomNumber) {
+    public String add(BookingDto bookingDto) {
+        for (int roomNr : bookingDto.getRoomNumber()) {
             Room room = roomRepository.findByRoomNumber(roomNr);
-            LocalDate checkInDate = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
-            LocalTime checkInTime = LocalTime.parse(time, DateTimeFormatter.ISO_TIME);
 
-            Booking booking = new Booking().builder()
-                    .name(name)
-                    .room(room)
-                    .checkInDate(checkInDate)
-                    .stayDuration(stayDays)
-                    .checkInTime(checkInTime)
-                    .build();
-
+            Booking booking = bookingMapper.bookingDtoToBooking(bookingDto);
             bookingRepository.save(booking);
 
             room.setAvailable(false);
@@ -56,7 +50,7 @@ public class BookingService {
                     throw new BookingAlreadyCancelledException("Booking already cancelled");
                 }
                 if (!checkCancellability(booking)) {
-                    throw new BookingAlreadyCancelledException("Booking already cancelled");
+                    throw new BookingCannotBeCanceledException("Booking cannot be cancelled");
                 }
                 booking.getRoom().setAvailable(true);
                 booking.setCancelled(true);
