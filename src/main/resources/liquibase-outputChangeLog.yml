@@ -1,7 +1,7 @@
 databaseChangeLog:
 - changeSet:
-    id: 1719399438640-1
-    author: danhotico (generated)
+    id: booking sequence
+    author: danhotico
     changes:
     - createSequence:
         cacheSize: 1
@@ -13,8 +13,8 @@ databaseChangeLog:
         sequenceName: booking_seq
         startValue: 1
 - changeSet:
-    id: 1719399438640-2
-    author: danhotico (generated)
+    id: feedback sequence
+    author: danhotico
     changes:
     - createSequence:
         cacheSize: 1
@@ -26,8 +26,8 @@ databaseChangeLog:
         sequenceName: feedback_seq
         startValue: 1
 - changeSet:
-    id: 1719399438640-3
-    author: danhotico (generated)
+    id: hotel sequence
+    author: danhotico
     changes:
     - createSequence:
         cacheSize: 1
@@ -39,8 +39,8 @@ databaseChangeLog:
         sequenceName: hotel_seq
         startValue: 1
 - changeSet:
-    id: 1719399438640-4
-    author: danhotico (generated)
+    id: room sequence
+    author: danhotico
     changes:
     - createSequence:
         cacheSize: 1
@@ -52,8 +52,8 @@ databaseChangeLog:
         sequenceName: room_seq
         startValue: 1
 - changeSet:
-    id: 1719399438640-5
-    author: danhotico (generated)
+    id: create booking table
+    author: danhotico
     changes:
     - createTable:
         columns:
@@ -84,8 +84,8 @@ databaseChangeLog:
             type: time(6) WITHOUT TIME ZONE
         tableName: booking
 - changeSet:
-    id: 1719399438640-6
-    author: danhotico (generated)
+    id: create feedback table
+    author: danhotico
     changes:
     - createTable:
         columns:
@@ -104,8 +104,8 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: feedback
 - changeSet:
-    id: 1719399438640-7
-    author: danhotico (generated)
+    id: create hotel table
+    author: danhotico
     changes:
     - createTable:
         columns:
@@ -131,8 +131,8 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: hotel
 - changeSet:
-    id: 1719399438640-8
-    author: danhotico (generated)
+    id: create room table
+    author: danhotico
     changes:
     - createTable:
         columns:
@@ -168,13 +168,13 @@ databaseChangeLog:
             type: INTEGER
         tableName: room
 - changeSet:
-    id: 1719399438640-9
-    author: danhotico (generated)
+    id: add room_hotel_id_fk
+    author: danhotico
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: hotel_id
         baseTableName: room
-        constraintName: fkdosq3ww4h9m2osim6o0lugng8
+        constraintName: room_hotel_id_fk
         deferrable: false
         initiallyDeferred: false
         onDelete: NO ACTION
@@ -183,13 +183,13 @@ databaseChangeLog:
         referencedTableName: hotel
         validate: true
 - changeSet:
-    id: 1719399438640-10
-    author: danhotico (generated)
+    id: add booking_room_id_fk
+    author: danhotico
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: room_id
         baseTableName: booking
-        constraintName: fkq83pan5xy2a6rn0qsl9bckqai
+        constraintName: booking_room_id_fk
         deferrable: false
         initiallyDeferred: false
         onDelete: NO ACTION
