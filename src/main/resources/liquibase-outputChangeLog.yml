@@ -1,0 +1,200 @@
+databaseChangeLog:
+- changeSet:
+    id: booking sequence
+    author: danhotico
+    changes:
+    - createSequence:
+        cacheSize: 1
+        cycle: false
+        dataType: bigint
+        incrementBy: 50
+        maxValue: 9223372036854775807
+        minValue: 1
+        sequenceName: booking_seq
+        startValue: 1
+- changeSet:
+    id: feedback sequence
+    author: danhotico
+    changes:
+    - createSequence:
+        cacheSize: 1
+        cycle: false
+        dataType: bigint
+        incrementBy: 50
+        maxValue: 9223372036854775807
+        minValue: 1
+        sequenceName: feedback_seq
+        startValue: 1
+- changeSet:
+    id: hotel sequence
+    author: danhotico
+    changes:
+    - createSequence:
+        cacheSize: 1
+        cycle: false
+        dataType: bigint
+        incrementBy: 50
+        maxValue: 9223372036854775807
+        minValue: 1
+        sequenceName: hotel_seq
+        startValue: 1
+- changeSet:
+    id: room sequence
+    author: danhotico
+    changes:
+    - createSequence:
+        cacheSize: 1
+        cycle: false
+        dataType: bigint
+        incrementBy: 50
+        maxValue: 9223372036854775807
+        minValue: 1
+        sequenceName: room_seq
+        startValue: 1
+- changeSet:
+    id: create booking table
+    author: danhotico
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: booking_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: room_id
+            type: INTEGER
+        - column:
+            name: check_in_date
+            type: date
+        - column:
+            name: stay_duration
+            type: INTEGER
+        - column:
+            name: cancelled
+            type: BOOLEAN
+        - column:
+            name: check_in_time
+            type: time(6) WITHOUT TIME ZONE
+        tableName: booking
+- changeSet:
+    id: create feedback table
+    author: danhotico
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: feedback_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: content
+            type: VARCHAR(255)
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: feedback
+- changeSet:
+    id: create hotel table
+    author: danhotico
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: hotel_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: latitude
+            type: FLOAT8
+        - column:
+            constraints:
+              nullable: false
+            name: longitude
+            type: FLOAT8
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: hotel
+- changeSet:
+    id: create room table
+    author: danhotico
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: room_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: is_available
+            type: BOOLEAN
+        - column:
+            constraints:
+              nullable: false
+            name: price
+            type: FLOAT8
+        - column:
+            constraints:
+              nullable: false
+            name: room_number
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: type
+            type: INTEGER
+        - column:
+            name: hotel_id
+            type: INTEGER
+        tableName: room
+- changeSet:
+    id: add room_hotel_id_fk
+    author: danhotico
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: hotel_id
+        baseTableName: room
+        constraintName: room_hotel_id_fk
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: hotel
+        validate: true
+- changeSet:
+    id: add booking_room_id_fk
+    author: danhotico
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: room_id
+        baseTableName: booking
+        constraintName: booking_room_id_fk
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: room
+        validate: true
+
