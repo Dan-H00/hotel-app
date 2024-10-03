@@ -6,6 +6,9 @@ import com.example.hotel_app.exception.hotel.HotelsNotFoundException;
 import com.example.hotel_app.mapper.HotelMapper;
 import com.example.hotel_app.repository.HotelRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,12 +22,11 @@ public class HotelService {
     private final GeolocationService geolocationService;
     private final HotelMapper hotelMapper;
 
-    public List<HotelDto> getHotels(Double radius) {
+    public Page<HotelDto> getHotels(Double radius, Pageable pageable) {
         List<Hotel> hotels = hotelRepository.findAll();
         List<HotelDto> hotelDtos = new ArrayList<>();
 
         Double[] userCoords = geolocationService.getCoordinates();
-
         Double[] userPos = convertCoordinates(userCoords[0], userCoords[1]);
 
         for (Hotel hotel : hotels) {
@@ -35,11 +37,15 @@ public class HotelService {
             }
         }
 
-        if (!hotelDtos.isEmpty()) {
-            return hotelDtos;
-        } else {
+        if (hotelDtos.isEmpty()) {
             throw new HotelsNotFoundException("Hotels not found");
         }
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), hotelDtos.size());
+        List<HotelDto> paginatedHotelDtos = hotelDtos.subList(start, end);
+
+        return new PageImpl<>(paginatedHotelDtos, pageable, hotelDtos.size());
     }
 
     private Double[] convertCoordinates(Double latitude, Double longitude) {

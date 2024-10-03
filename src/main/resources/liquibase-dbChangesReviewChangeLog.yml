@@ -1,0 +1,39 @@
+databaseChangeLog:
+- changeSet:
+    id: change name to customerName
+    author: danhotico
+    changes:
+    - renameColumn:
+          newColumnName: customerName
+          oldColumnName: name
+          schemaName: public
+          tableName: booking
+- changeSet:
+    id: change price to pricePerNight
+    author: danhotico
+    changes:
+    - renameColumn:
+          newColumnName: pricePerNight
+          oldColumnName: price
+          schemaName: public
+          tableName: room
+- changeSet:
+    id: change to String from int for type
+    author: danhotico
+    changes:
+    - modifyDataType:
+          columnName: type
+          newDataType: VARCHAR(255)
+          schemaName: public
+          tableName: room
+- changeSet:
+    id: add capacity column
+    author: danhotico
+    changes:
+    - addColumn:
+          tableName: room
+          columns:
+          - column:
+                name: capacity
+                type: VARCHAR(255)
+

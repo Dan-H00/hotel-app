@@ -4,10 +4,9 @@ import com.example.hotel_app.dto.BookingDtoInput;
 import com.example.hotel_app.dto.BookingDtoOutput;
 import com.example.hotel_app.service.BookingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +23,15 @@ public class BookingController {
     @PostMapping("/cancel")
     public void cancelBooking(@RequestParam String name, @RequestParam int roomNumber) throws Exception {
         bookingService.cancel(name, roomNumber);
+    }
+
+    @GetMapping("/bookings")
+    public Page<BookingDtoOutput> getBookings(@RequestParam Pageable pageable) {
+        return bookingService.getBookings(pageable);
+    }
+
+    @GetMapping("/bookings")
+    public List<BookingDtoOutput> getBookingsForCustomer(@RequestParam String customerName) {
+        return bookingService.getBookingsByCustomerName(customerName);
     }
 }

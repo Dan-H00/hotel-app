@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: add city column to hotel table
+      author: danhotico
+      changes:
+        - addColumn:
+            tableName: hotel
+            columns:
+              - column:
+                  name: city
+                  type: VARCHAR(255)

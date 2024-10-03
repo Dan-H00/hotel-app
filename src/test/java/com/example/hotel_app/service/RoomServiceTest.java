@@ -43,28 +43,28 @@ public class RoomServiceTest {
                 .id(1)
                 .roomNumber(101)
                 .hotel(hotel)
-                .price(101)
+                .pricePerNight(101)
                 .isAvailable(true)
                 .build();
 
         RoomDto roomDto1 = RoomDto.builder()
                 .id(room1.getId())
                 .roomNumber(room1.getRoomNumber())
-                .price(room1.getPrice())
+                .price(room1.getPricePerNight())
                 .build();
 
         Room room2 = Room.builder()
                 .id(2)
                 .roomNumber(102)
                 .hotel(hotel)
-                .price(102)
+                .pricePerNight(102)
                 .isAvailable(true)
                 .build();
 
         RoomDto roomDto2 = RoomDto.builder()
                 .id(room2.getId())
                 .roomNumber(room2.getRoomNumber())
-                .price(room2.getPrice())
+                .price(room2.getPricePerNight())
                 .build();
 
         when(hotelRepository.findByName(hotel.getName())).thenReturn(hotel);

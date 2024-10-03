@@ -52,21 +52,21 @@ public class BookingServiceTest {
                 .id(1)
                 .roomNumber(101)
                 .hotel(new Hotel())
-                .price(101)
-                .type(2)
+                .pricePerNight(101)
+                .type("2")
                 .build();
 
         Room room2 = Room.builder()
                 .id(2)
                 .roomNumber(102)
                 .hotel(new Hotel())
-                .price(102)
-                .type(3)
+                .pricePerNight(102)
+                .type("3")
                 .build();
 
         Booking booking1 = Booking.builder()
                 .id(1L)
-                .name(bookingDtoInput.getName())
+                .customerName(bookingDtoInput.getName())
                 .checkInDate(bookingDtoInput.getCheckInDate())
                 .checkInTime(LocalTime.parse(bookingDtoInput.getCheckInTime()))
                 .stayDuration(bookingDtoInput.getStayDuration())
@@ -75,7 +75,7 @@ public class BookingServiceTest {
 
         Booking booking2 = Booking.builder()
                 .id(2L)
-                .name(bookingDtoInput.getName())
+                .customerName(bookingDtoInput.getName())
                 .checkInDate(bookingDtoInput.getCheckInDate())
                 .checkInTime(LocalTime.parse(bookingDtoInput.getCheckInTime()))
                 .stayDuration(bookingDtoInput.getStayDuration())
@@ -85,7 +85,7 @@ public class BookingServiceTest {
         BookingDtoOutput bookingDtoOutput1 = BookingDtoOutput.builder()
                 .id(booking1.getId())
                 .room(booking1.getRoom())
-                .name(booking1.getName())
+                .name(booking1.getCustomerName())
                 .stayDuration(booking1.getStayDuration())
                 .checkInDate(booking1.getCheckInDate())
                 .checkInTime(booking1.getCheckInTime())
@@ -94,7 +94,7 @@ public class BookingServiceTest {
         BookingDtoOutput bookingDtoOutput2 = BookingDtoOutput.builder()
                 .id(booking2.getId())
                 .room(booking2.getRoom())
-                .name(booking2.getName())
+                .name(booking2.getCustomerName())
                 .stayDuration(booking2.getStayDuration())
                 .checkInDate(booking2.getCheckInDate())
                 .checkInTime(booking2.getCheckInTime())
@@ -132,21 +132,21 @@ public class BookingServiceTest {
     public void testCancel() {
         Booking booking = Booking.builder()
                 .stayDuration(2)
-                .name("test")
+                .customerName("test")
                 .checkInDate(LocalDate.parse("2024-07-25"))
                 .checkInTime(LocalTime.parse("10:00"))
                 .room(Room.builder()
-                        .type(2)
-                        .price(100)
+                        .type("2")
+                        .pricePerNight(100)
                         .roomNumber(101)
                         .hotel(new Hotel())
                         .build())
                 .build();
 
-        when(bookingRepository.findAllByName(booking.getName()))
+        when(bookingRepository.findAllByCustomerName(booking.getCustomerName()))
                 .thenReturn((List.of(booking)));
 
-        bookingService.cancel(booking.getName(), booking.getRoom().getRoomNumber());
+        bookingService.cancel(booking.getCustomerName(), booking.getRoom().getRoomNumber());
 
         verify(bookingRepository, times(1)).save(booking);
         verify(roomRepository).save(booking.getRoom());

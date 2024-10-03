@@ -2,6 +2,7 @@ package com.example.hotel_app.service;
 
 import com.example.hotel_app.dto.BookingDtoInput;
 import com.example.hotel_app.dto.BookingDtoOutput;
+import com.example.hotel_app.dto.HotelDto;
 import com.example.hotel_app.entity.Booking;
 import com.example.hotel_app.entity.Room;
 import com.example.hotel_app.exception.booking.BookingAlreadyCancelledException;
@@ -11,6 +12,9 @@ import com.example.hotel_app.mapper.BookingMapper;
 import com.example.hotel_app.repository.BookingRepository;
 import com.example.hotel_app.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -43,8 +47,42 @@ public class BookingService {
         return result;
     }
 
+    public List<BookingDtoOutput> getBookingsByCustomerName(String customerName) {
+        List<BookingDtoOutput> result = new ArrayList<>();
+        List<Booking> bookings = bookingRepository.findAllByCustomerName(customerName);
+
+        for (Booking booking : bookings) {
+            result.add(bookingMapper.bookingToBookingDtoOutput(booking));
+        }
+
+        if (result.isEmpty()) {
+            throw new BookingNotFoundException("Bookings not found!");
+        }
+
+        return result;
+    }
+
+    public Page<BookingDtoOutput> getBookings(Pageable pageable) {
+        List<Booking> bookings = bookingRepository.findAll();
+        List<BookingDtoOutput> result = new ArrayList<>();
+
+        for (Booking booking : bookings) {
+            result.add(bookingMapper.bookingToBookingDtoOutput(booking));
+        }
+
+        if (result.isEmpty()) {
+            throw new BookingNotFoundException("Bookings not found!");
+        }
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), result.size());
+        List<BookingDtoOutput> paginatedBookingDtos = result.subList(start, end);
+
+        return new PageImpl<>(paginatedBookingDtos, pageable, bookings.size());
+    }
+
     public void cancel(String name, int roomNumber) {
-        List<Booking> bookings = bookingRepository.findAllByName(name);
+        List<Booking> bookings = bookingRepository.findAllByCustomerName(name);
 
         if (bookings.isEmpty()) {
             throw new BookingNotFoundException("Booking with name " + name + " not found");

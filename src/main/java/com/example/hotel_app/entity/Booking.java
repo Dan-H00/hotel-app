@@ -19,7 +19,7 @@ public class Booking {
     @Id
     @GeneratedValue
     private Long id;
-    private String name;
+    private String customerName;
     private LocalTime checkInTime;
     private LocalDate checkInDate;
     private int stayDuration;

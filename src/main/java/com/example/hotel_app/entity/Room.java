@@ -14,11 +14,12 @@ public class Room {
     @GeneratedValue
     private int id;
     private int roomNumber;
-    private int type;
-    private double price;
+    private String type;
+    private double pricePerNight;
     @ColumnDefault("true")
     private boolean isAvailable;
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
+    private int capacity;
 }
