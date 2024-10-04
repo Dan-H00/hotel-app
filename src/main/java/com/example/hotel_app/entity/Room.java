@@ -15,6 +15,7 @@ public class Room {
     private int id;
     private int roomNumber;
     private String type;
+    @Column(name = "price_per_night")
     private double pricePerNight;
     @ColumnDefault("true")
     private boolean isAvailable;

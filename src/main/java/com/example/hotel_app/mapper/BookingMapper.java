@@ -5,7 +5,7 @@ import com.example.hotel_app.dto.BookingDtoOutput;
 import com.example.hotel_app.entity.Booking;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(uses = {RoomMapper.class})
 public interface BookingMapper {
     BookingDtoOutput bookingToBookingDtoOutput(Booking booking);
     BookingDtoInput bookingToBookingDtoInput(Booking booking);

@@ -13,10 +13,10 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class BookingDtoOutput {
     private Long id;
-    private String name;
+    private String customerName;
     private LocalTime checkInTime;
     private LocalDate checkInDate;
     private int stayDuration;
     private boolean cancelled;
-    private Room room;
+    private RoomDto room;
 }

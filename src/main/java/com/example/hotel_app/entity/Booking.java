@@ -19,6 +19,7 @@ public class Booking {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(name = "customer_name")
     private String customerName;
     private LocalTime checkInTime;
     private LocalDate checkInDate;

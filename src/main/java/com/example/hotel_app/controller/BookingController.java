@@ -3,9 +3,11 @@ package com.example.hotel_app.controller;
 import com.example.hotel_app.dto.BookingDtoInput;
 import com.example.hotel_app.dto.BookingDtoOutput;
 import com.example.hotel_app.service.BookingService;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +28,12 @@ public class BookingController {
     }
 
     @GetMapping("/bookings")
-    public Page<BookingDtoOutput> getBookings(@RequestParam Pageable pageable) {
-        return bookingService.getBookings(pageable);
+    public ResponseEntity<Page<BookingDtoOutput>> getBookings(@RequestParam int pageNo, @RequestParam int pageSize) throws Exception {
+        return ResponseEntity.ok(bookingService.getBookings(pageNo, pageSize));
     }
 
-    @GetMapping("/bookings")
-    public List<BookingDtoOutput> getBookingsForCustomer(@RequestParam String customerName) {
+    @GetMapping("/customer/{customerName}/bookings")
+    public List<BookingDtoOutput> getBookingsForCustomer(@PathVariable String customerName) {
         return bookingService.getBookingsByCustomerName(customerName);
     }
 }

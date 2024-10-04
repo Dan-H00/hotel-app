@@ -14,6 +14,7 @@ import com.example.hotel_app.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -62,23 +63,20 @@ public class BookingService {
         return result;
     }
 
-    public Page<BookingDtoOutput> getBookings(Pageable pageable) {
-        List<Booking> bookings = bookingRepository.findAll();
+    public Page<BookingDtoOutput> getBookings(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Booking> bookings = bookingRepository.findAll(pageable);
         List<BookingDtoOutput> result = new ArrayList<>();
+
+        if (bookings.isEmpty()) {
+            throw new BookingNotFoundException("Bookings not found!");
+        }
 
         for (Booking booking : bookings) {
             result.add(bookingMapper.bookingToBookingDtoOutput(booking));
         }
 
-        if (result.isEmpty()) {
-            throw new BookingNotFoundException("Bookings not found!");
-        }
-
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), result.size());
-        List<BookingDtoOutput> paginatedBookingDtos = result.subList(start, end);
-
-        return new PageImpl<>(paginatedBookingDtos, pageable, bookings.size());
+        return new PageImpl<>(result);
     }
 
     public void cancel(String name, int roomNumber) {

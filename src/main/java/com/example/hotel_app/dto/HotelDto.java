@@ -10,4 +10,5 @@ import lombok.*;
 public class HotelDto {
     private int id;
     private String name;
+    private String city;
 }

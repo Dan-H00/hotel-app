@@ -10,5 +10,5 @@ import lombok.*;
 public class RoomDto {
     private int id;
     private int roomNumber;
-    private double price;
+    private double pricePerNight;
 }

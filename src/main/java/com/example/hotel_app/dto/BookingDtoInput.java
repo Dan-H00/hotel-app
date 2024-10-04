@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class BookingDtoInput {
     private int[] roomNumber;
-    private String name;
+    private String customerName;
     private LocalDate checkInDate;
     private int stayDuration;
     private String checkInTime;
