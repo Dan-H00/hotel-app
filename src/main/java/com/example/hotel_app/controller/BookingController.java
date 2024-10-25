@@ -18,13 +18,14 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping("/book")
-    public List<BookingDtoOutput> addBooking(@RequestBody BookingDtoInput bookingDtoInput) throws Exception {
-        return bookingService.add(bookingDtoInput);
+    public ResponseEntity<List<BookingDtoOutput>> addBooking(@RequestBody BookingDtoInput bookingDtoInput) throws Exception {
+        return ResponseEntity.ok(bookingService.add(bookingDtoInput));
     }
 
     @PostMapping("/cancel")
-    public void cancelBooking(@RequestParam String name, @RequestParam int roomNumber) throws Exception {
+    public ResponseEntity<Void> cancelBooking(@RequestParam String name, @RequestParam int roomNumber) throws Exception {
         bookingService.cancel(name, roomNumber);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/bookings")
@@ -33,7 +34,7 @@ public class BookingController {
     }
 
     @GetMapping("/customer/{customerName}/bookings")
-    public List<BookingDtoOutput> getBookingsForCustomer(@PathVariable String customerName) {
-        return bookingService.getBookingsByCustomerName(customerName);
+    public ResponseEntity<List<BookingDtoOutput>> getBookingsForCustomer(@PathVariable String customerName) {
+        return ResponseEntity.ok(bookingService.getBookingsByCustomerName(customerName));
     }
 }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -60,8 +61,8 @@ public class HotelServiceTest {
         when(hotelMapper.hotelToHotelDto(hotel1)).thenReturn(hotelDto1);
         when(hotelMapper.hotelToHotelDto(hotel2)).thenReturn(hotelDto2);
 
-        List<HotelDto> result = hotelService.getHotels(125000.0);
-        assertEquals("Hotel 1 Hotel 2", result.get(0).getName() + " " + result.get(1).getName());
+        Page<HotelDto> result = hotelService.getHotels(125000.0, 0, 3);
+        assertEquals("Hotel 1 Hotel 2", result.getContent().getFirst().getName() + " " + result.getContent().get(1).getName());
 
     }
 }

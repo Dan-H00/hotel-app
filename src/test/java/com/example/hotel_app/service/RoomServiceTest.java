@@ -11,6 +11,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -44,7 +47,7 @@ public class RoomServiceTest {
                 .roomNumber(101)
                 .hotel(hotel)
                 .pricePerNight(101)
-                .isAvailable(true)
+//                .isAvailable(true)
                 .build();
 
         RoomDto roomDto1 = RoomDto.builder()
@@ -58,7 +61,7 @@ public class RoomServiceTest {
                 .roomNumber(102)
                 .hotel(hotel)
                 .pricePerNight(102)
-                .isAvailable(true)
+//                .isAvailable(true)
                 .build();
 
         RoomDto roomDto2 = RoomDto.builder()
@@ -68,12 +71,12 @@ public class RoomServiceTest {
                 .build();
 
         when(hotelRepository.findByName(hotel.getName())).thenReturn(hotel);
-        when(roomRepository.findAllByHotel(hotel)).thenReturn(List.of(room1, room2));
+        when(roomRepository.findAllByHotel(hotel, PageRequest.of(0, 2))).thenReturn(new PageImpl<>(List.of(room1, room2)));
         when(roomMapper.roomToRoomDto(room1)).thenReturn(roomDto1);
         when(roomMapper.roomToRoomDto(room2)).thenReturn(roomDto2);
 
-        List<RoomDto> result = roomService.getRooms(hotel.getName());
-        assertEquals("101 102", result.get(0).getRoomNumber() + " " + result.get(1).getRoomNumber());
+        Page<RoomDto> result = roomService.getRooms(hotel.getName(), 0, 2);
+        assertEquals("101 102", result.getContent().getFirst().getRoomNumber() + " " + result.getContent().get(1).getRoomNumber());
 
     }
 }

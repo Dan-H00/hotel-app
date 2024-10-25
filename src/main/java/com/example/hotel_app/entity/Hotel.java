@@ -1,9 +1,9 @@
 package com.example.hotel_app.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +18,6 @@ public class Hotel {
     private double latitude;
     private double longitude;
     private String city;
+    @OneToMany(mappedBy = "hotel")
+    private List<Room> rooms;
 }

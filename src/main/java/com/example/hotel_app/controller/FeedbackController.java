@@ -4,6 +4,7 @@ import com.example.hotel_app.dto.FeedbackDtoInput;
 import com.example.hotel_app.dto.FeedbackDtoOutput;
 import com.example.hotel_app.service.FeedbackService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +16,7 @@ public class FeedbackController {
     private final FeedbackService feedbackService;
 
     @PostMapping("/feedback")
-    public FeedbackDtoOutput saveFeedback(@RequestBody FeedbackDtoInput feedbackDtoInput) {
-        return feedbackService.saveFeedback(feedbackDtoInput);
+    public ResponseEntity<FeedbackDtoOutput> saveFeedback(@RequestBody FeedbackDtoInput feedbackDtoInput) {
+        return ResponseEntity.ok(feedbackService.saveFeedback(feedbackDtoInput));
     }
 }
